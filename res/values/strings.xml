@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    
+    <color name="final_winner">#ECB500</color>
+    <color name="final_loser">#AAAAAA</color>
+    
+    <string name="hello">Hello World, NFLScoreboardActivity!</string>
+    <string name="app_name">NFL Scoreboard</string>
+    
+    <string name="status_loading">Loading scores...</string>
+    <string name="status_empty">No games found</string>
+    <string name="status_error">There was an error loading scores, please try again</string>
+
+</resources>

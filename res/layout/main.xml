@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <!-- header -->
+    
+    <LinearLayout
+        android:id="@+id/main_header"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <Button
+    		android:id="@+id/previous_week_button"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:background="@drawable/left_arrow"
+    		/>
+        
+        <TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="2"
+    		/>
+    		
+		<TextView
+			android:id="@+id/main_current_week"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:textSize="20dip"
+		    android:textStyle="bold"
+		    android:text=""
+		    />
+		    
+    	<TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="2"
+    		/>
+        
+        <Button
+    		android:id="@+id/next_week_button"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:background="@drawable/right_arrow"
+    		/>
+    </LinearLayout>
+    
+    <!-- list/status (main view) -->
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        >
+        
+        <ListView
+            android:id="@+id/main_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            />
+        
+        <LinearLayout
+			android:id="@+id/main_status"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:gravity="center"
+			android:visibility="gone"
+			>
+        
+	        <TextView
+				android:id="@+id/main_status_loading"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/status_loading"
+				android:visibility="gone"
+				/>
+	        
+	        <TextView
+				android:id="@+id/main_status_empty"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/status_empty"
+				android:visibility="gone"
+				/>
+	        
+	        <TextView
+				android:id="@+id/main_status_error"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/status_error"
+				android:visibility="gone"
+				/>
+	        
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <!-- footer -->
+
+	<LinearLayout
+	    android:id="@+id/main_footer"
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+        
+	    <Button
+	        android:id="@+id/this_week_button"
+	        android:layout_width="60dip"
+	        android:layout_height="60dip"
+	        android:background="@drawable/today"
+	        />
+	    
+	    <TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="2"
+    		/>
+	    
+	    <Button
+	        android:id="@+id/refresh_button"
+	        android:layout_width="60dip"
+	        android:layout_height="60dip"
+	        android:background="@drawable/refresh"
+	        />
+	    
+	</LinearLayout>
+
+</LinearLayout>
