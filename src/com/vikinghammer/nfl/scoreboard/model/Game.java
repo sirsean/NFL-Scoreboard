@@ -5,14 +5,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import com.vikinghammer.nfl.scoreboard.date.LocalTimeCalculator;
 
+@JsonIgnoreProperties({ "possessionTeam", "seasonType", "season", 
+	"weekNumber", "dateTime_monthday", "dateTime_daytime", "dateTime_date",
+	"preview", "recap", "awayTeamScores", "homeTeamScores", "gameKey",
+	"game_top_performer"
+	})
 public class Game {
+	
+	public static final String GAME_ID = "GAME_ID";
 	
 	private long internalId = (new Random()).nextLong();
 
-	@SerializedName("id")
+	@JsonProperty("id")
 	private String gameId;
 	
 	private String status;
@@ -21,8 +30,12 @@ public class Game {
 	private String stadium;
 	private String tvNetwork;
 	
+	@JsonProperty("dateTime")
 	private String dateTime;
+	
+	@JsonProperty("dateTime_time")
 	private String dateTime_time;
+	
 	private transient Calendar localTime = null;
 	
 	private String weather;
@@ -31,25 +44,25 @@ public class Game {
 	
 	private int periodCount;
 	
-	@SerializedName("insideTwenty")
+	@JsonProperty("insideTwenty")
 	private boolean insideTwenty;
 	
-	@SerializedName("isFinal")
+	@JsonProperty("isFinal")
 	private boolean isFinal;
 	
-	@SerializedName("isHalftime")
+	@JsonProperty("isHalftime")
 	private boolean isHalftime;
 	
-	@SerializedName("isInProgress")
+	@JsonProperty("isInProgress")
 	private boolean isInProgress;
 	
-	@SerializedName("isPreGame")
+	@JsonProperty("isPreGame")
 	private boolean isPreGame;
 	
-	@SerializedName("crossedRedZone")
+	@JsonProperty("crossedRedZone")
 	private boolean isCrossedRedZone;
 	
-	@SerializedName("hasJustScored")
+	@JsonProperty("hasJustScored")
 	private boolean isJustScored;
 	
 	private int down;

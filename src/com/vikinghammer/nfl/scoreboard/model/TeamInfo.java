@@ -3,16 +3,16 @@ package com.vikinghammer.nfl.scoreboard.model;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class TeamInfo {
 	
-	@SerializedName("id")
+	@JsonProperty("id")
 	private String teamId;
 	
 	private String name;
 	
-	@SerializedName("nickName")
+	@JsonProperty("nickName")
 	private String nickname;
 	
 	private String abbreviation;

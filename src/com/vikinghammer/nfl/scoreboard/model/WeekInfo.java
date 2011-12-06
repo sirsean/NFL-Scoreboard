@@ -1,11 +1,23 @@
 package com.vikinghammer.nfl.scoreboard.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties({ "seasonType", "weekNumber" })
 public class WeekInfo {
 	
+	@JsonProperty("season")
 	private int season;
+	
+	@JsonProperty("week")
 	private int week;
+	
+	@JsonProperty("type")
 	private String type;
+	
+	@JsonProperty("weekName")
 	private String weekName;
+	
 	
 	public String getUrl() {
 		return String.format(

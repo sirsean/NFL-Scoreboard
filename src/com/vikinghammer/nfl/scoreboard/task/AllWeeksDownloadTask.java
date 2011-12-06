@@ -8,9 +8,8 @@ import java.net.URL;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.vikinghammer.nfl.scoreboard.model.AllWeeks;
+import com.vikinghammer.nfl.scoreboard.parse.AllWeeksParser;
 
 public class AllWeeksDownloadTask extends AsyncTask<String, String, AllWeeks> {
 	
@@ -32,9 +31,8 @@ public class AllWeeksDownloadTask extends AsyncTask<String, String, AllWeeks> {
 				InputStream inputStream = url.openConnection().getInputStream();
 				Reader reader = new InputStreamReader(inputStream);
 				if (!isCancelled()) {
-					Gson gson = new GsonBuilder().create();
-					AllWeeks allWeeks = gson.fromJson(reader, AllWeeks.class);
-					return allWeeks;
+					AllWeeksParser parser = new AllWeeksParser();
+					return parser.parse(reader);
 				}
 			} catch (Throwable t) {
 				Log.e("FAIL", t.getMessage(), t);

@@ -3,8 +3,12 @@ package com.vikinghammer.nfl.scoreboard.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
+@JsonIgnoreProperties({ "case", "__ws_time_ms__", "__ws_name",
+	"same", "__cmde__", "__processing_ms__",
+	})
 public class WeekSchedule {
 	
 	private int season;
@@ -12,7 +16,7 @@ public class WeekSchedule {
 	
 	private ScheduleInfo week;
 	
-	@SerializedName("content")
+	@JsonProperty("content")
 	private List<Game> games;
 	
 	public WeekSchedule() {
