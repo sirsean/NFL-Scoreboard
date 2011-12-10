@@ -143,10 +143,10 @@ public class WeekScheduleAdapter extends BaseAdapter {
 			homeScore.setText(String.format("%s", game.getHomeScore()));
 			
 			ImageView awayTimeouts = (ImageView)gameView.findViewById(R.id.in_progress_away_timeouts);
-			awayTimeouts.setImageDrawable(mContext.getResources().getDrawable(timeoutsImages[game.getAwayTeamTimeoutsRemaining()]));
+			awayTimeouts.setImageDrawable(mContext.getResources().getDrawable(NFLUtil.timeoutsDrawable(game.getAwayTeamTimeoutsRemaining())));
 			
 			ImageView homeTimeouts = (ImageView)gameView.findViewById(R.id.in_progress_home_timeouts);
-			homeTimeouts.setImageDrawable(mContext.getResources().getDrawable(timeoutsImages[game.getHomeTeamTimeoutsRemaining()]));
+			homeTimeouts.setImageDrawable(mContext.getResources().getDrawable(NFLUtil.timeoutsDrawable(game.getHomeTeamTimeoutsRemaining())));
 			
 			View inProgressMiddle = gameView.findViewById(R.id.in_progress_middle);
 			View halftimeMiddle = gameView.findViewById(R.id.halftime_middle);
@@ -191,11 +191,4 @@ public class WeekScheduleAdapter extends BaseAdapter {
 		return gameView;
 	}
 	
-	private int[] timeoutsImages = new int[] {
-		R.drawable.timeouts_0,
-		R.drawable.timeouts_1,
-		R.drawable.timeouts_2,
-		R.drawable.timeouts_3
-	};
-
 }

@@ -10,6 +10,31 @@ public class NFLUtil {
 	public static String allWeeksUrl() {
 		return "http://s3.amazonaws.com/nflgc/allWeeks.js";
 	}
+
+	public static String getGameUrl(String gameId) {
+		return String.format(
+				"http://s3.amazonaws.com/nflgc/game_%s_game.js",
+				gameId
+				);
+	}
+	
+	public static String getGameStatsUrl(String gameId) {
+		return String.format(
+				"http://s3.amazonaws.com/nflgc/game_%s_gameStats.js",
+				gameId
+				);
+	}
+	
+	public static int timeoutsDrawable(int timeouts) {
+		return timeoutsImages[timeouts];
+	}
+
+	private static int[] timeoutsImages = new int[] {
+		R.drawable.timeouts_0,
+		R.drawable.timeouts_1,
+		R.drawable.timeouts_2,
+		R.drawable.timeouts_3
+	};
 	
 	public static int teamLogoDrawable(String abbreviation) {
 		return teamLogos.get(abbreviation);

@@ -2,17 +2,20 @@ package com.vikinghammer.nfl.scoreboard.free;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vikinghammer.nfl.scoreboard.adapter.WeekScheduleAdapter;
 import com.vikinghammer.nfl.scoreboard.model.AllWeeks;
+import com.vikinghammer.nfl.scoreboard.model.Game;
 import com.vikinghammer.nfl.scoreboard.model.WeekInfo;
 import com.vikinghammer.nfl.scoreboard.model.WeekSchedule;
 import com.vikinghammer.nfl.scoreboard.task.AllWeeksDownloadTask;
@@ -110,6 +113,16 @@ public class NFLScoreboardActivity extends Activity {
 				mWeekScheduleList.setAdapter(null);
 				downloadAllWeeks();
 			}
+		});
+        mWeekScheduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+        		Log.i("Game Clicked", String.format("Position: %s, id: %s", position, id));
+        		Game game = (Game)adapter.getItemAtPosition(position);
+        		Log.i("Game", game.getGameId());
+        		Intent intent = new Intent(mContext, SingleGameActivity.class);
+        		intent.putExtra(Game.GAME_ID, game.getGameId());
+        		startActivity(intent);
+        	}
 		});
     }
     
