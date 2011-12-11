@@ -130,7 +130,11 @@ public class NFLScoreboardActivity extends Activity {
     public void onResume() {
     	super.onResume();
     	
-    	downloadAllWeeks();
+    	if (mCurrentWeek == null) {
+    		downloadAllWeeks();
+    	} else {
+    		downloadWeekSchedule();
+    	}
     }
     
     private void updateDisplay() {

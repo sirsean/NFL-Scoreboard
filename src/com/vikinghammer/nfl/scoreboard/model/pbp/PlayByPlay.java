@@ -1,5 +1,6 @@
 package com.vikinghammer.nfl.scoreboard.model.pbp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -28,6 +29,15 @@ public class PlayByPlay {
 	
 	@JsonProperty("4")
 	private List<Play> fourthQuarter;
+	
+	public List<Play> getAllPlays() {
+		List<Play> plays = new ArrayList<Play>();
+		plays.addAll(firstQuarter);
+		plays.addAll(secondQuarter);
+		plays.addAll(thirdQuarter);
+		plays.addAll(fourthQuarter);
+		return plays;
+	}
 	
 	public String getGameId() {
 		return gameId;

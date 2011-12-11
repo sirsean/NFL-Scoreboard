@@ -25,6 +25,20 @@ public class NFLUtil {
 				);
 	}
 	
+	public static String getPlayByPlayUrl(String gameId) {
+		return String.format(
+				"http://s3.amazonaws.com/nflgc/game_%s_playByPlay.js",
+				gameId
+				);
+	}
+	
+	public static String getCurrentDriveUrl(String gameId) {
+		return String.format(
+				"http://s3.amazonaws.com/nflgc/game_%s_currentDrive.js",
+				gameId
+				);
+	}
+	
 	public static int timeoutsDrawable(int timeouts) {
 		return timeoutsImages[timeouts];
 	}

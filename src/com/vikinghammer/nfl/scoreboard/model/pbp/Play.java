@@ -1,5 +1,7 @@
 package com.vikinghammer.nfl.scoreboard.model.pbp;
 
+import java.util.Random;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -7,6 +9,8 @@ import com.vikinghammer.nfl.scoreboard.model.TeamInfo;
 
 @JsonIgnoreProperties({ "startPossessionTeam", "endPossessionTeam", "media" })
 public class Play {
+	
+	private long internalId = (new Random()).nextLong();
 	
 	@JsonProperty("id")
 	private String id;
@@ -61,6 +65,10 @@ public class Play {
 	
 	@JsonProperty("yardTeamBefore")
 	private TeamInfo yardTeamBefore;
+	
+	public long getInternalId() {
+		return internalId;
+	}
 
 	public String getId() {
 		return id;

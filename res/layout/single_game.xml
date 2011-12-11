@@ -5,12 +5,11 @@
     android:layout_height="fill_parent"
     >
 
-    <TextView
-        android:id="@+id/fake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        />
+    <com.vikinghammer.nfl.scoreboard.view.GameOverviewView
+    	android:id="@+id/game_overview"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	/>
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -20,40 +19,26 @@
         >
         
         <LinearLayout
-            android:id="@+id/single_game_info_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" 
-            >
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="game info"
-                />
-            
-        </LinearLayout>
-        
-        <LinearLayout
             android:id="@+id/single_game_play_by_play_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" 
+            android:orientation="vertical"
             android:visibility="gone"
             >
             
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="play by play"
+            <ListView
+                android:id="@+id/play_by_play_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 />
             
         </LinearLayout>
-        
+            
         <LinearLayout
-            android:id="@+id/single_game_stats_view"
+            android:id="@+id/loading_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
             >
@@ -61,7 +46,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="stats"
+                android:text="Loading plays..."
+                />
+            
+        </LinearLayout>
+            
+        <LinearLayout
+            android:id="@+id/error_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Error loading plays"
+                />
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/empty_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No plays found"
                 />
             
         </LinearLayout>
@@ -74,27 +93,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        
-        <Button 
-            android:id="@+id/single_game_info_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GI"
-            />
-        
-        <Button
-            android:id="@+id/single_game_play_by_play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PBP"
-            />
-        
-        <Button
-            android:id="@+id/single_game_stats_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="S"
-            />
         
         <TextView
             android:layout_width="wrap_content"

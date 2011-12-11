@@ -7,9 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import com.vikinghammer.nfl.scoreboard.adapter.PlayByPlayAdapter;
 import com.vikinghammer.nfl.scoreboard.model.Game;
+import com.vikinghammer.nfl.scoreboard.model.pbp.PlayByPlay;
+import com.vikinghammer.nfl.scoreboard.task.AsyncTaskListener;
+import com.vikinghammer.nfl.scoreboard.task.GameDownloadTask;
+import com.vikinghammer.nfl.scoreboard.task.PlayByPlayDownloadTask;
+import com.vikinghammer.nfl.scoreboard.util.NFLUtil;
+import com.vikinghammer.nfl.scoreboard.view.GameOverviewView;
 
 public class SingleGameActivity extends Activity {
 	
@@ -17,13 +24,20 @@ public class SingleGameActivity extends Activity {
 	
 	private String mGameId;
 	
-	private View gameInfoView;
-	private View playByPlayView;
-	private View statsView;
+	private GameOverviewView gameOverviewView;
 	
-	private Button gameInfoButton;
-	private Button playByPlayButton;
-	private Button statsButton;
+	private View playByPlayView;
+	
+	private View loadingView;
+	private View errorView;
+	private View emptyView;
+	
+	private GameDownloadTask mGameDownloadTask;
+	private PlayByPlayDownloadTask mPlayByPlayDownloadTask;
+	
+	private ListView mPlayByPlayList;
+	
+	private Button mRefreshButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,44 +48,95 @@ public class SingleGameActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		mGameId = extras.getString(Game.GAME_ID);
 		
-		TextView textView = (TextView)findViewById(R.id.fake);
-		textView.setText(mGameId);
+		gameOverviewView = (GameOverviewView)findViewById(R.id.game_overview);
 		
-		gameInfoView = findViewById(R.id.single_game_info_view);
 		playByPlayView = findViewById(R.id.single_game_play_by_play_view);
-		statsView = findViewById(R.id.single_game_stats_view);
+		loadingView = findViewById(R.id.loading_view);
+		errorView = findViewById(R.id.error_view);
+		emptyView = findViewById(R.id.empty_view);
 		
-		gameInfoButton = (Button)findViewById(R.id.single_game_info_button);
-		playByPlayButton = (Button)findViewById(R.id.single_game_play_by_play_button);
-		statsButton = (Button)findViewById(R.id.single_game_stats_button);
+		mPlayByPlayList = (ListView)findViewById(R.id.play_by_play_list);
 		
-		gameInfoButton.setOnClickListener(new View.OnClickListener() {
+		mRefreshButton = (Button)findViewById(R.id.refresh_button);
+		
+		mRefreshButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				show(Show.GAME_INFO);
-			}
-		});
-		playByPlayButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				show(Show.PLAY_BY_PLAY);
-			}
-		});
-		statsButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				show(Show.STATS);
+				downloadGame();
+				downloadPlayByPlay();
 			}
 		});
 		
 		Log.i("SingleGame", mGameId);
+		
+		show(Show.LOADING);
+		downloadGame();
+		downloadPlayByPlay();
 	}
 	
 	private enum Show {
-		GAME_INFO, PLAY_BY_PLAY, STATS
+		PBP, LOADING, ERROR, EMPTY
 	};
 	
 	private void show(Show show) {
-		gameInfoView.setVisibility(Show.GAME_INFO.equals(show) ? View.VISIBLE : View.GONE);
-		playByPlayView.setVisibility(Show.PLAY_BY_PLAY.equals(show) ? View.VISIBLE : View.GONE);
-		statsView.setVisibility(Show.STATS.equals(show) ? View.VISIBLE : View.GONE);
+		playByPlayView.setVisibility(Show.PBP.equals(show) ? View.VISIBLE : View.GONE);
+		loadingView.setVisibility(Show.LOADING.equals(show) ? View.VISIBLE : View.GONE);
+		errorView.setVisibility(Show.ERROR.equals(show) ? View.VISIBLE : View.GONE);
+		emptyView.setVisibility(Show.EMPTY.equals(show) ? View.VISIBLE : View.GONE);
+	}
+	
+	private void downloadGame() {
+		if (mGameId != null) {
+			mGameDownloadTask = new GameDownloadTask(new AsyncTaskListener() {
+				public void onComplete(Object item) {
+					if (item != null) {
+						Log.i("Game downloaded", "Game download finished");
+						Game game = (Game)item;
+						gameOverviewView.update(game);
+					} else {
+						Log.i("Game failed", "Couldn't download the game");
+					}
+				}
+				
+				public Context getContext() {
+					return mContext;
+				}
+			});
+			mGameDownloadTask.execute(NFLUtil.getGameUrl(mGameId));
+		}
+	}
+	
+	private void downloadPlayByPlay() {
+		if (mGameId != null) {
+			mPlayByPlayDownloadTask = new PlayByPlayDownloadTask(new AsyncTaskListener() {
+				public void onComplete(Object item) {
+					if (item != null) {
+						Log.i("PBP downloaded", "Got the play by play");
+						PlayByPlay playByPlay = (PlayByPlay)item;
+						if (mPlayByPlayList.getAdapter() == null) {
+							PlayByPlayAdapter pbpAdapter = new PlayByPlayAdapter(mContext, playByPlay);
+							mPlayByPlayList.setAdapter(pbpAdapter);
+						} else {
+							((PlayByPlayAdapter)mPlayByPlayList.getAdapter()).refill(playByPlay);
+						}
+						
+						if (((PlayByPlayAdapter)mPlayByPlayList.getAdapter()).getCount() <= 0) {
+							show(Show.EMPTY);
+						} else {
+							show(Show.PBP);
+						}
+			
+					} else {
+						Log.i("PBP failed", "Couldn't download the play by play");
+						show(Show.ERROR);
+					}
+				}
+				
+				public Context getContext() {
+					return mContext;
+				}
+			});
+			mPlayByPlayDownloadTask.execute(NFLUtil.getPlayByPlayUrl(mGameId));
+		}
 	}
 
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/play_by_play_item"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="5dip"
+    android:paddingRight="10dip"
+    >
+    
+    <!-- 
+    <LinearLayout
+    	android:id="@+id/event_log_title"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	>
+    	
+    	<TextView
+	    	android:id="@+id/event_log_inning"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textStyle="bold"
+	    	android:paddingRight="10dip"
+	    	/>
+    	
+    	<TextView
+	    	android:id="@+id/event_log_team"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textStyle="bold"
+	    	/>
+	
+    </LinearLayout>
+    -->
+    
+	<TextView
+		android:id="@+id/pbp_description"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		/>
+
+</LinearLayout>
