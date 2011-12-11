@@ -13,7 +13,7 @@ import com.vikinghammer.nfl.scoreboard.date.LocalTimeCalculator;
 @JsonIgnoreProperties({ "possessionTeam", "seasonType", "season", 
 	"weekNumber", "dateTime_monthday", "dateTime_daytime", "dateTime_date",
 	"preview", "recap", "awayTeamScores", "homeTeamScores", "gameKey",
-	"game_top_performer"
+	"game_top_performer", "yardLine"
 	})
 public class Game {
 	
