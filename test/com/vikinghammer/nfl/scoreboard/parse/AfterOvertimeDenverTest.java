@@ -21,6 +21,7 @@ public class AfterOvertimeDenverTest extends TestCase {
 		
 		Game game14 = week.getGames().get(14);
 		assertNotNull(game14);
+		assertEquals("2011112710", game14.getGameId());
 		assertFalse(game14.isInProgress());
 		assertTrue(game14.isFinal());
 		assertEquals("DEN", game14.getAwayTeam().getAbbreviation());
