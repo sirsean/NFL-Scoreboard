@@ -20,11 +20,26 @@ public class WeekInfo {
 	
 	
 	public String getUrl() {
-		return String.format(
-				"http://s3.amazonaws.com/nflgc/week_%s_%s_schedule.js",
-				type,
-				week
-				);
+		if ("reg".equals(type.trim().toLowerCase())) {
+			return String.format(
+					"http://s3.amazonaws.com/nflgc/week_%s_%s_schedule.js",
+					type,
+					week
+					);
+		} else if (("post".equals(type.trim().toLowerCase())) || ("pro".equals(type.trim().toLowerCase()))) {
+			return String.format(
+					"http://app.prodlb.gotvnetworks.com/nflgc/api/schedule.js?season=%s&type=%s&week=%s",
+					season,
+					type,
+					week
+					);
+		} else {
+			return String.format(
+					"http://s3.amazonaws.com/nflgc/week_%s_%s_schedule.js",
+					type,
+					week
+					);
+		}
 	}
 	
 	public int getSeason() {

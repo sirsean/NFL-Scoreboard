@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.vikinghammer.event.EventRecorder;
 import com.vikinghammer.nfl.scoreboard.adapter.WeekScheduleAdapter;
 import com.vikinghammer.nfl.scoreboard.model.AllWeeks;
 import com.vikinghammer.nfl.scoreboard.model.Game;
@@ -72,6 +73,7 @@ public class NFLScoreboardActivity extends Activity {
         
         mPreviousWeekButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
+				EventRecorder.record(mContext, "previous-week", mCurrentWeek != null ? mCurrentWeek.getWeekName() : "");
 				if (mCurrentSchedule != null) {
 					Log.i("Previous Clicked", String.format("Current: %s, Last Known: %s", mCurrentWeek.getWeekName(), mLastKnownWeek.getWeekName()));
 					if ((mLastKnownWeek == null) || mLastKnownWeek.equals(mCurrentWeek)) {
@@ -88,6 +90,7 @@ public class NFLScoreboardActivity extends Activity {
 		});
         mNextWeekButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				EventRecorder.record(mContext, "next-week", mCurrentWeek != null ? mCurrentWeek.getWeekName() : "");
 				if (mCurrentSchedule != null) {
 					Log.i("Next Clicked", String.format("Current: %s, Last Known: %s", mCurrentWeek.getWeekName(), mLastKnownWeek.getWeekName()));
 					if ((mLastKnownWeek == null) || mLastKnownWeek.equals(mCurrentWeek)) {
@@ -104,12 +107,14 @@ public class NFLScoreboardActivity extends Activity {
 		});
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				EventRecorder.record(mContext, "refresh");
 				show(Show.LOADING);
 				downloadWeekSchedule();
 			}
 		});
         mThisWeekButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				EventRecorder.record(mContext, "this-week");
 				mWeekScheduleList.setAdapter(null);
 				downloadAllWeeks();
 			}
@@ -127,8 +132,17 @@ public class NFLScoreboardActivity extends Activity {
     }
     
     @Override
+    public void onPause() {
+    	super.onPause();
+    	
+    	EventRecorder.record(this, "dashboard-closed", mCurrentWeek != null ? mCurrentWeek.getWeekName() : "");
+    }
+    
+    @Override
     public void onResume() {
     	super.onResume();
+        
+        EventRecorder.record(this, "dashboard-opened", mCurrentWeek != null ? mCurrentWeek.getWeekName() : "");
     	
     	if (mCurrentWeek == null) {
     		downloadAllWeeks();

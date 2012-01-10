@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.vikinghammer.event.EventRecorder;
 import com.vikinghammer.nfl.scoreboard.adapter.PlayByPlayAdapter;
 import com.vikinghammer.nfl.scoreboard.model.Game;
 import com.vikinghammer.nfl.scoreboard.model.pbp.PlayByPlay;
@@ -61,6 +62,7 @@ public class SingleGameActivity extends Activity {
 		
 		mRefreshButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				EventRecorder.record(mContext, "refresh", mGameId);
 				downloadGame();
 				downloadPlayByPlay();
 			}
@@ -71,6 +73,20 @@ public class SingleGameActivity extends Activity {
 		show(Show.LOADING);
 		downloadGame();
 		downloadPlayByPlay();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		EventRecorder.record(this, "single-game-opened", mGameId);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		EventRecorder.record(this, "single-game-closed", mGameId);
 	}
 	
 	private enum Show {
